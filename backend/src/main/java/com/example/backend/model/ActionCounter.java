@@ -12,11 +12,10 @@ public class ActionCounter {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
     private Long id;
-    @Column(name = "action_name", nullable = false)
+    @Column(name = "action_name", unique=true, nullable = false)
     private String actionName;
     @Column(name = "counter", nullable = false, columnDefinition="integer default '0'")
     private Integer counter;
-
     @Column(name = "update_on")
     @UpdateTimestamp
     private Date updateOn;
