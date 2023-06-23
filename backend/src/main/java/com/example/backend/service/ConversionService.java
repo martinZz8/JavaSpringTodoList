@@ -90,7 +90,9 @@ public class ConversionService {
         TodoItem ti = new TodoItem();
         ti.setName(dtoi.getName());
         ti.setDescription(dtoi.getDescription());
-        ti.setIsDone(dtoi.getIsDone() ? 1 : 0);
+        if (dtoi.getIsDone() != null) {
+            ti.setIsDone(dtoi.getIsDone() ? 1 : 0);
+        }
 
         return ti;
     }
