@@ -12,9 +12,9 @@ public class TodoItem {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
     private Long id;
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
     @Column(name = "created_on", nullable = false, updatable = false)
     @CreationTimestamp

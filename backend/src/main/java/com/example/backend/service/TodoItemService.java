@@ -3,6 +3,7 @@ package com.example.backend.service;
 import com.example.backend.DTO.TodoItemDTOI;
 import com.example.backend.DTO.TodoItemDTOO;
 import com.example.backend.DTO.TodoItemIsDoneDTOI;
+import com.example.backend.DTO.pack.TodoItemDTOOPack;
 import com.example.backend.enums.ActionCounterName;
 import com.example.backend.model.TodoItem;
 import com.example.backend.repository.TodoItemRepository;
@@ -53,7 +54,10 @@ public class TodoItemService {
         if (isDone != null) {
             Integer isDoneInt = isDone ? 1 : 0;
             todoItemsToRet = todoItemsToRet.stream()
-                    .filter(it -> it.getIsDone().equals(isDoneInt))
+                    .filter(it -> {
+                        Integer isDoneIntFromDb = it.getIsDone() != null ? it.getIsDone() : 0;
+                        return isDoneIntFromDb.equals(isDoneInt);
+                    })
                     .collect(Collectors.toList());
         }
 
@@ -96,6 +100,7 @@ public class TodoItemService {
         Optional<TodoItem> o_entity = todoItemRepository.findByName(dtoi.getName());
         if (!o_entity.isPresent()) {
             TodoItem entity = conversionService.todoItemDTOIToEntity(dtoi);
+
             TodoItemDTOO result;
 
             entity = todoItemRepository.save(entity);
@@ -106,21 +111,35 @@ public class TodoItemService {
         return Optional.empty();
     }
 
-    public boolean updateTodoItem(Long id, TodoItemDTOI dtoi) {
+    public Optional<TodoItemDTOOPack> updateTodoItem(Long id, TodoItemDTOI dtoi) {
         // Increase ActionCounter
         actionCounterService.increaseActionCounter(ActionCounterName.UPDATE);
 
         Optional<TodoItem> o_entity = todoItemRepository.findById(id);
+        Optional<TodoItem> o_entity_new_name = todoItemRepository.findByName(dtoi.getName());
 
         if (o_entity.isPresent()) {
+            // Check if item with new name (o_entity_new_name) has id same as old item (o_entity).
+            // If not - don't update that item (since names need to be unique, we can update only item with old name)
+            if (o_entity_new_name.isPresent()) {
+                if (o_entity_new_name.get().getId() != o_entity.get().getId()) {
+                    return Optional.of(new TodoItemDTOOPack(null, "Given name is already occupied by other element - try another one"));
+                }
+            }
+
             TodoItem entity = conversionService.todoItemDTOIToEntity(dtoi);
             entity.setId(o_entity.get().getId());
             entity.setCreatedOn(o_entity.get().getCreatedOn());
+
+            // If new entity (and dtoi) has null "isDone" parameter, set it to previous one
+            if (entity.getIsDone() == null) {
+                entity.setIsDone(o_entity.get().getIsDone());
+            }
             todoItemRepository.save(entity);
 
-            return true;
+            return Optional.of(new TodoItemDTOOPack(conversionService.todoItemToDTOO(entity), ""));
         }
-        return false;
+        return Optional.empty();
     }
 
     public boolean updateStatusOfTodoItem(Long id, TodoItemIsDoneDTOI dtoi) {
@@ -131,7 +150,7 @@ public class TodoItemService {
 
         if (o_entity.isPresent()) {
             TodoItem entity = o_entity.get();
-            entity.setIsDone(dtoi.getDone() ? 1 : 0);
+            entity.setIsDone(dtoi.getIsDone() ? 1 : 0);
             todoItemRepository.save(entity);
 
             return true;

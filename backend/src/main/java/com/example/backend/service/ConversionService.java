@@ -19,7 +19,12 @@ public class ConversionService {
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setDescription(entity.getDescription());
-        dto.setDone(entity.getIsDone() == 1);
+        dto.setDone(
+                entity.getIsDone() != null ?
+                    entity.getIsDone() == 1
+                :
+                    false
+        );
         dto.setCreatedOn(entity.getCreatedOn());
 
         return dto;

@@ -13,11 +13,6 @@ public class TodoItemDTOI {
         this.isDone = isDone;
     }
 
-    public TodoItemDTOI(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
-
     public String getName() {
         return name;
     }

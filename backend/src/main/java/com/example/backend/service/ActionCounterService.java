@@ -3,6 +3,7 @@ package com.example.backend.service;
 
 import com.example.backend.DTO.ActionCounterDTOO;
 import com.example.backend.DTO.TodoItemDTOO;
+import com.example.backend.DTO.pack.ActionCounterDTOOPack;
 import com.example.backend.model.ActionCounter;
 import com.example.backend.repository.ActionCounterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class ActionCounterService {
         return Optional.empty();
     }
 
-    public Optional<ActionCounterDTOO> decreaseActionCounter(String actionName) {
+    public Optional<ActionCounterDTOOPack> decreaseActionCounter(String actionName) {
         Optional<ActionCounter> o_entity = actionCounterRepository.findByActionName(actionName);
         ActionCounterDTOO dto;
 
@@ -65,9 +66,12 @@ public class ActionCounterService {
                 ac.setCounter(ac.getCounter()-1);
                 actionCounterRepository.save(ac);
             }
+            else {
+                return Optional.of(new ActionCounterDTOOPack(null, "Counter already reached 0, can't decrease it"));
+            }
 
             dto = conversionService.actionCounterToDTOO(ac);
-            return Optional.of(dto);
+            return Optional.of(new ActionCounterDTOOPack(dto, ""));
         }
         return Optional.empty();
     }

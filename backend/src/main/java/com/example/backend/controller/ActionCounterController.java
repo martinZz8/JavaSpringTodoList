@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.DTO.ActionCounterDTOO;
+import com.example.backend.DTO.pack.ActionCounterDTOOPack;
 import com.example.backend.enums.ActionCounterName;
 import com.example.backend.service.ActionCounterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +50,16 @@ public class ActionCounterController {
     }
 
     @PostMapping(path = "/decrease/{name}", produces = "application/json")
-    public ResponseEntity<ActionCounterDTOO> decreaseActionCounter(@PathVariable String name) {
+    public ResponseEntity<ActionCounterDTOOPack> decreaseActionCounter(@PathVariable String name) {
         if (ActionCounterName.isProperActionName(name)) {
-            Optional<ActionCounterDTOO> o_action_counter = actionCounterService.decreaseActionCounter(name);
+            Optional<ActionCounterDTOOPack> o_action_counter = actionCounterService.decreaseActionCounter(name);
 
             if (o_action_counter.isPresent()) {
-                return ResponseEntity.status(HttpStatus.OK).body(o_action_counter.get());
+                if (o_action_counter.get().getActionCounter() != null) {
+                    return ResponseEntity.status(HttpStatus.OK).body(o_action_counter.get());
+                }
+
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(o_action_counter.get());
             }
         }
 

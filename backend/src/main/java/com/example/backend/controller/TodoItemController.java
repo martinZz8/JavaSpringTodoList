@@ -3,6 +3,7 @@ package com.example.backend.controller;
 import com.example.backend.DTO.TodoItemDTOI;
 import com.example.backend.DTO.TodoItemDTOO;
 import com.example.backend.DTO.TodoItemIsDoneDTOI;
+import com.example.backend.DTO.pack.TodoItemDTOOPack;
 import com.example.backend.service.TodoItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +25,7 @@ public class TodoItemController {
         return todoItemService.getAllTodoItems();
     }
 
-    // TODO - filter elements
-    @GetMapping(path = "/all_filtering", produces = "application/json")
+    @GetMapping(path = "/all_filtered", produces = "application/json")
     public List<TodoItemDTOO> getAllFilteredTodoItems(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "done", required = false) Boolean isDone,
@@ -51,8 +51,15 @@ public class TodoItemController {
         }
     }
 
+    // Required parameters: "name" (String), "description" (String)
+    // Optional parameters: "isDone" (Boolean)
     @PostMapping(path = "/create", produces = "application/json")
     public ResponseEntity<TodoItemDTOO> createTodoItem(@RequestBody TodoItemDTOI dtoi) {
+        // If dtoi has null "isDone" parameter, set it to default value - false
+        if (dtoi.getIsDone() == null) {
+            dtoi.setIsDone(false);
+        }
+
         Optional<TodoItemDTOO> o_todo_item = todoItemService.createTodoItem(dtoi);
 
         if (o_todo_item.isPresent()) {
@@ -63,14 +70,18 @@ public class TodoItemController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Void> updateTodoItem(@PathVariable String id, @RequestBody TodoItemDTOI dtoi) {
+    public ResponseEntity<TodoItemDTOOPack> updateTodoItem(@PathVariable String id, @RequestBody TodoItemDTOI dtoi) {
         try {
-            if (todoItemService.updateTodoItem(Long.parseLong(id), dtoi)) {
-                return ResponseEntity.status(HttpStatus.OK).body(null);
+            Optional<TodoItemDTOOPack> o_todo_item = todoItemService.updateTodoItem(Long.parseLong(id), dtoi);
+            if (o_todo_item.isPresent()) {
+                if (o_todo_item.get().getTodoItem() != null) {
+                    return ResponseEntity.status(HttpStatus.OK).body(o_todo_item.get());
+                }
+
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(o_todo_item.get());
             }
-            else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
-            }
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
         catch(NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
