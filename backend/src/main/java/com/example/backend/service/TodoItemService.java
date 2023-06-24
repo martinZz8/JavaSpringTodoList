@@ -101,10 +101,8 @@ public class TodoItemService {
         if (!o_entity.isPresent()) {
             TodoItem entity = conversionService.todoItemDTOIToEntity(dtoi);
 
-            TodoItemDTOO result;
-
             entity = todoItemRepository.save(entity);
-            result = conversionService.todoItemToDTOO(entity);
+            TodoItemDTOO result = conversionService.todoItemToDTOO(entity);
 
             return Optional.of(result);
         }

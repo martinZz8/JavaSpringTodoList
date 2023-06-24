@@ -18,6 +18,14 @@ public class TodoItemDTOO {
         this.isDone = isDone;
     }
 
+    public TodoItemDTOO(TodoItemDTOO todoItem) {
+        this.id = todoItem.getId();
+        this.name = todoItem.getName();
+        this.description = todoItem.getDescription();
+        this.createdOn = todoItem.getCreatedOn();
+        this.isDone = todoItem.getDone();
+    }
+
     public Long getId() {
         return id;
     }
