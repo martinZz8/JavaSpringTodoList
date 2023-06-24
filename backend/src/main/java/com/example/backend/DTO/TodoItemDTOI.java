@@ -1,7 +1,11 @@
 package com.example.backend.DTO;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class TodoItemDTOI {
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String description;
     private Boolean isDone;
 
