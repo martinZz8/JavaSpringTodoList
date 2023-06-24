@@ -1,0 +1,40 @@
+.buttonWrap {
+   width: 35px;
+   height: 35px;
+   position: fixed;
+   bottom: 30px;
+   right: 10px;
+   background-color: var(--color-darker-gray);
+   border-radius: 50%;
+   overflow: hidden;
+   visibility: hidden;
+   transform: translateX(50px);
+   transition: transform 0.5s ease-in-out;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+
+   &.isShowed {
+      transform: translateX(0);
+   }
+
+   i {
+      color: var(--color-white);
+      font-size: 20px;
+      transform: rotateZ(180deg);
+      transition: color 0.3s ease-in-out;
+   }
+
+   &:hover {
+      i {
+         color: var(--color-black);
+      }
+   }
+}
+
+@media all and (min-width: 950px) {
+   .buttonWrap {
+      visibility: visible;
+   }
+}

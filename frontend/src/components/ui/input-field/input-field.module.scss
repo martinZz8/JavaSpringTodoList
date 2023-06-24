@@ -1,0 +1,84 @@
+.inputField {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .label {
+    width: 100%;
+    height: auto;
+    margin-bottom: 3px;
+    padding-left: 2px;
+    color: var(--color-black);
+
+    &.whiteLabel {
+      color: var(--color-white);
+    }
+
+    p {
+      font-weight: 700;
+      font-style: normal;
+      font-size: 17px;
+    }
+  }
+
+  .input {
+    width: 100%;
+    height: auto;
+    background-color: var(--color-gray);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    color: var(--color-dark-gray2);
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    font-style: normal;
+    padding: 7px 9px;
+
+    &::placeholder {
+      color: var(--color-lighter-gray);
+      font-size: 14px;
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-dark-purple);
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &.errorInput {
+      background-color: var(--color-light-red);
+      border-color: var(--color-red);
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      background-color: var(--color-darker-gray);
+    }
+    
+    &.borderBlack {
+      border-color: var(--color-black);
+      
+      &:focus {
+        border-color: var(--color-dark-purple);
+      }
+    }
+  }
+
+  .errorMessage {
+    height: 20px;
+    padding-left: 2px;
+
+    p {
+      color: var(--color-red);
+      font-size: 13px;
+      font-weight: 600;
+      font-style: normal;
+    }
+  }
+}

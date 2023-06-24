@@ -1,0 +1,36 @@
+.basicModal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; //TODO - check if change from previous "100vw" is proper
+  height: 100vh;
+  z-index: 100;
+  overflow-y: auto;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.25s, opacity 0.25s ease-in-out; //set 'visibility' to 'hidden' after after 0.25s
+
+  &.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s linear 0s; //instant show when visible
+  }
+
+  .background {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.65);
+
+    &.cursorPointer {
+      cursor: pointer;
+    }
+  }
+
+  .content {
+    position: absolute;
+  }
+}
+

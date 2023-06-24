@@ -1,0 +1,36 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  padding: 20px 10px;
+  margin: 50px auto 20px auto;
+
+  .filterBarWrapper {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .itemListWrapper {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+
+    .itemWrapper {
+      width: 100%;
+      margin-bottom: 10px;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+    p {
+      color: var(--color-white);
+      font-weight: 600;
+      font-size: 16px;
+      text-align: center;
+    }
+  }
+}

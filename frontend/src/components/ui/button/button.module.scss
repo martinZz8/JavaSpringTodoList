@@ -1,0 +1,117 @@
+.buttonWrap {
+  width: 100%;
+  height: 100%;
+
+  .button {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 14px;
+    transition: background-color 0.1s ease-in-out;
+
+    &.bigFont {
+      font-size: 23px;
+    }
+
+    &.bigHeight {
+      padding: 10px 0;
+    }
+
+    &.boxShadow {
+      box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+    }
+
+    &.backgroundColorLightPurple {
+      background-color: var(--color-light-purple);
+    }
+
+    &.backgroundColorPurple {
+      background-color: var(--color-semi-light-purple);
+    }
+
+    &.backgroundColorRed {
+      background-color: var(--color-red);
+    }
+
+    &.backgroundColorDarkerGray {
+      background-color: var(--color-darker-gray2);
+    }
+
+    &.backgroundColorLightGray {
+      background-color: var(--color-dark-white2);
+    }
+
+    &.backgroundColorBlack {
+      background-color: var(--color-black);
+    }
+
+    &.fontColorWhite {
+      color: var(--color-white);
+    }
+
+    &.fontColorBlack {
+      color: var(--color-black);
+    }
+
+    &.hoverColorsLightPurple {
+      &:hover {
+        background-color: var(--color-semi-dark-purple);
+      }
+    }
+
+    &.hoverColorsPurple {
+      &:hover {
+        background-color: var(--color-light-purple);
+      }
+    }
+
+    &.hoverColorsRed {
+      &:hover {
+        color: var(--color-black);
+        background-color: var(--color-light-red);
+      }
+    }
+
+    &.hoverColorsDarkerGray {
+      &:hover {
+        background-color: var(--color-semi-darker-gray2);
+      }
+    }
+
+    &.hoverColorsLightGray {
+      &:hover {
+        background-color: var(--color-light-gray2);
+      }
+    }
+
+    &.hoverColorsBlack {
+      &:hover {
+        color: var(--color-black);
+        background-color: var(--color-white);
+      }
+    }
+
+    &.disabledColors {
+      color: var(--color-darker-gray);
+      background-color: var(--color-solid-dark-gray);
+    }
+
+    &.noBorderRadius {
+      border-radius: 0;
+    }
+
+    &.defaultCursor {
+      cursor: default;
+    }
+  }
+}
