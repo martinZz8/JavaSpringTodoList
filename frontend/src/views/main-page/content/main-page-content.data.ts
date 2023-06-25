@@ -28,12 +28,12 @@ export const selectIsOrderByDateAscendingOptions: IOption[] = [
   {
     id: 2,
     value: "true",
-    textToShow: "Rosnąco"
+    textToShow: "Najstarsze"
   },
   {
     id: 3,
     value: "false",
-    textToShow: "Malejąco"
+    textToShow: "Najmłodsze"
   }
 ];
 

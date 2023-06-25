@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./select.module.scss";
 
 // SVGS
-import SVGArrowDown2 from "../../../assets/svgs/arrow_down_v2.svg";
+import {ReactComponent as SVGArrowDown2} from "../../../assets/svgs/arrow_down_v2.svg";
 
 // hooks
 import useSelect from "./select.hook";

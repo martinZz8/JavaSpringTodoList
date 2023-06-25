@@ -14,14 +14,15 @@ const StandardApp: React.FC<IStandardApp> = ({appVersion}) => {
   return (
     <Switch>
       {/*TODO Td item page*/}
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path="/item/:id"*/}
-      {/*  component={() => (*/}
-      {/*    <ViewTdItem appVersion={appVersion} />*/}
-      {/*  )*/}
-      {/*  }*/}
-      {/*/>*/}
+      <Route
+        exact
+        path="/item/:id"
+        component={() => (
+          // <ViewTdItem appVersion={appVersion} />
+          <></>
+        )
+        }
+      />
       {/*Main page*/}
       <Route
         exact

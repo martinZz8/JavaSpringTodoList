@@ -19,9 +19,9 @@ const useMainPageContent = () => {
   const [filterValues, setFilterValues] = useState<IFilterValues>(initialFilterValues);
 
   // To delete
-  useEffect(() => {
-    console.log("items: ", items);
-  },[items]);
+  // useEffect(() => {
+  //   console.log("items: ", items);
+  // },[items]);
 
   // -- Every time filterValues changes, refetch data from DB --
   useEffect(() => {
@@ -33,14 +33,6 @@ const useMainPageContent = () => {
       ...prev,
       [name]: value
     }));
-  };
-
-  const locallyDeleteItemAtIndex = (idx: number) => {
-    if ((idx >= 0) && (idx < items.length)) {
-        let newItems = [...items];
-        newItems.splice(idx, 1);
-        setItems(newItems);
-    }
   };
 
   const fetchData = async () => {
@@ -56,7 +48,7 @@ const useMainPageContent = () => {
         formedUrl = formedUrl.substring(0, formedUrl.length-1);
       }
 
-      console.log("Formed url: ", formedUrl);
+      //console.log("Formed url: ", formedUrl);
 
       setIsLoading(true);
       try {
@@ -100,30 +92,36 @@ const useMainPageContent = () => {
     }
   };
 
-  // -- Not used --
-  // const locallyChangeItemAtIndex = (idx: number, newItem: IItem) => {
-  //   if ((idx >= 0) && (idx < items.length)) {
-  //     setItems(prev => [
-  //       ...prev.slice(0, idx),
-  //       {
-  //         id: newItem.id,
-  //         name: newItem.name,
-  //         description: newItem.description,
-  //         createdOn: newItem.createdOn,
-  //         done: newItem.done
-  //       },
-  //       ...prev.slice(idx+1, prev.length),
-  //     ]);
-  //   }
-  // };
+  const locallyChangeItemAtIndex = (idx: number, newItem: IItem) => {
+    if ((idx >= 0) && (idx < items.length)) {
+      setItems(prev => [
+        ...prev.slice(0, idx),
+        {
+          id: newItem.id,
+          name: newItem.name,
+          description: newItem.description,
+          createdOn: newItem.createdOn,
+          done: newItem.done
+        },
+        ...prev.slice(idx+1, prev.length),
+      ]);
+    }
+  };
 
-  // -- Not used --
-  // const locallyAddItem = (newItem: IItem) => {
-  //   setItems(prev => [
-  //     ...prev,
-  //     newItem
-  //   ]);
-  // };
+  const locallyAddItem = (newItem: IItem) => {
+    setItems(prev => [
+      newItem,
+      ...prev
+    ]);
+  };
+
+  const locallyDeleteItemAtIndex = (idx: number) => {
+    if ((idx >= 0) && (idx < items.length)) {
+      let newItems = [...items];
+      newItems.splice(idx, 1);
+      setItems(newItems);
+    }
+  };
 
   return {
     items,
@@ -131,7 +129,9 @@ const useMainPageContent = () => {
     isErrorDuringFetch,
     filterValues,
     handleOnFilterChange,
-    fetchData
+    locallyChangeItemAtIndex,
+    locallyAddItem,
+    locallyDeleteItemAtIndex
   };
 };
 

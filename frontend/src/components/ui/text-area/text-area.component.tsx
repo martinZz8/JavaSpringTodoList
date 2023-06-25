@@ -14,10 +14,11 @@ interface ITextArea {
   errorMessage?: string;
   handleChange: (name: string, value: string) => void;
   disabled?: boolean;
+  noErrorBar?: boolean;
 }
 
 const TextArea: React.FC<ITextArea> = ({
-    name, value, label, placeholder, isError, errorMessage, handleChange, disabled
+    name, value, label, placeholder, isError, errorMessage, handleChange, disabled, noErrorBar
   }) => {
 
   return (
@@ -38,14 +39,19 @@ const TextArea: React.FC<ITextArea> = ({
         onChange={(e:ChangeEvent<HTMLTextAreaElement>) => handleChange(e.target.name, e.target.value)}
         disabled={disabled}
       />
-      <div className={styles.errorMessage}>
-        {
-          isError && errorMessage !== "" && !disabled ?
-            <p>{errorMessage}</p>
-          :
-            null
-        }
-      </div>
+      {
+        !noErrorBar ?
+          <div className={styles.errorMessage}>
+            {
+              isError && errorMessage !== "" && !disabled ?
+                <p>{errorMessage}</p>
+                :
+                null
+            }
+          </div>
+        :
+          null
+      }
     </div>
   );
 };

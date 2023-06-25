@@ -1,0 +1,92 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: var(--color-gray);
+  border: 1px solid var(--color-black);
+
+  .main {
+    width: 100%;
+    display: flex;
+
+    .spacedItems {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      .dataWrapper {
+        display: flex;
+        flex-direction: column;
+        margin-left: 25px;
+
+        .infoWrapper {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 10px;
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+
+          p {
+            color: var(--color-black);
+            font-size: 15px;
+            font-weight: 400;
+
+            &.title {
+              font-weight: 600;
+              font-size: 18px;
+            }
+          }
+        }
+      }
+
+      .toolbar {
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+
+        i {
+          cursor: pointer;
+          color: var(--color-black);
+          font-size: 26px;
+          margin-bottom: 10px;
+
+          &.noMarginBottom {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .editWrapper {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px solid var(--color-darker-gray);
+
+    .inputWrapper {
+      width: 100%;
+      margin-bottom: 10px;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+    .editButtonWrapper {
+      align-self: flex-end;
+      width: 70px;
+      height: 40px;
+    }
+  }
+
+  .errorMessageWrap {
+    margin-top: 10px;
+    height: 30px;
+  }
+}

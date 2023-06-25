@@ -1,0 +1,18 @@
+.wrapper {
+  width: 100%;
+  flex-direction: column;
+
+  .inputWrapper {
+    width: 100%;
+    margin-bottom: 10px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  .errorMessageWrap {
+    margin-top: 10px;
+    height: 30px;
+  }
+}

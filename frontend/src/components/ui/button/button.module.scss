@@ -16,7 +16,7 @@
     transition: background-color 0.1s ease-in-out;
 
     &.bigFont {
-      font-size: 23px;
+      font-size: 20px;
     }
 
     &.bigHeight {
@@ -65,7 +65,7 @@
 
     &.hoverColorsLightPurple {
       &:hover {
-        background-color: var(--color-semi-dark-purple);
+        background-color: var(--color-dark-gray);
       }
     }
 

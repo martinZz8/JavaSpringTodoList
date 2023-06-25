@@ -62,8 +62,8 @@ const TemplateActionModal: React.FC<IActionModal> = ({
             <Button
               type="submit"
               title={submitButtonTitle}
-              fontColor="white"
-              backgroundColor="darkerGray"
+              fontColor="black"
+              backgroundColor="lightPurple"
               bigFont
               disabled={isSubmitButtonDisabled}
             />
@@ -72,8 +72,8 @@ const TemplateActionModal: React.FC<IActionModal> = ({
             <Button
               type="button"
               title={cancelButtonTitle}
-              fontColor="white"
-              backgroundColor="darkerGray"
+              fontColor="black"
+              backgroundColor="red"
               handleClick={onCancelClick}
               bigFont
             />

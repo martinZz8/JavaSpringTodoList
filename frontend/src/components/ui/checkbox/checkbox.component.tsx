@@ -9,8 +9,8 @@ interface ICheckbox {
   name: string;
   value: string;
   checked?: boolean;
-  label: string;
-  labelColor: "white" | "black";
+  label?: string;
+  labelColor?: "white" | "black";
   handleChange: (name: string, value: string, checked: boolean) => void;
   isError?: boolean;
   disabled?: boolean;
@@ -38,7 +38,10 @@ const Checkbox: React.FC<ICheckbox> = ({
         onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e.target.name, e.target.value, e.target.checked)}
         disabled={disabled}
       />
-      <span className={`${styles.checkmark} ${disabled ? styles.disabledColors : ""}`}/>
+      <span className={`
+        ${styles.checkmark}
+        ${disabled ? styles.disabledColors : ""}
+      `}/>
     </label>
   );
 };

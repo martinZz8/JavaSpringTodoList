@@ -14,15 +14,15 @@
       color: var(--color-black);
       font-weight: 700;
       font-style: normal;
-      font-size: 15px;
+      font-size: 17px;
     }
   }
 
   .textArea {
     width: 100%;
     height: 146px;
-    background-color: var(--color-gray);
-    border: 1px solid var(--color-dark-gray);
+    background-color: var(--color-light-gray);
+    border: 2px solid var(--color-dark-gray);
     border-radius: 10px;
     font-family: 'Nunito', sans-serif;
     color: var(--color-solid-dark-gray);
@@ -42,7 +42,7 @@
 
     &:focus {
       outline: none;
-      border-color: var(--color-light-purple);
+      border-color: var(--color-dark-purple);
     }
 
     &:focus-visible {
