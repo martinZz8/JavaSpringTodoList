@@ -60,12 +60,7 @@ const useMainPageContent = () => {
 
       setIsLoading(true);
       try {
-        const {data} = await axios.get(formedUrl, {
-          // headers: {
-          //   "Content-Type": "application/json",
-          //   "Access-Control-Allow-Origin": "*"
-          // }
-        });
+        const {data} = await axios.get(formedUrl);
 
         setItems(data.map((it: any) => ({
           id: it.id,
