@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path="api/action_counter")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ActionCounterController {
     @Autowired
     private ActionCounterService actionCounterService;

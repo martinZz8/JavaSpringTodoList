@@ -10,13 +10,13 @@ const Footer: React.FC = () => {
         <div className={styles.footerInfo}>
            <div className={styles.item}>
               <p>
-                "Wszelkie prawa zastrzeżone"
+                 Wszelkie prawa zastrzeżone
                  <span className={styles.copyright}> &copy;</span> {new Date().getFullYear()}
               </p>
            </div>
            <div className={styles.item}>
               <p>
-                "Wykonane przez: "
+                 Wykonane przez:
                  <br/>
                  <a href="mailto: martinzz.info@gmail.com">Maciej Harbuz</a>
               </p>

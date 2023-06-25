@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path="api/todo_item")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TodoItemController {
     @Autowired
     private TodoItemService todoItemService;

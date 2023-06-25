@@ -18,6 +18,12 @@ const useMainPageContent = () => {
   const [isErrorDuringFetch, setIsErrorDuringFetch] = useState<boolean>(false);
   const [filterValues, setFilterValues] = useState<IFilterValues>(initialFilterValues);
 
+  // To delete
+  useEffect(() => {
+    console.log("items: ", items);
+  },[items]);
+
+  // -- Every time filterValues changes, refetch data from DB --
   useEffect(() => {
     void fetchData();
   },[filterValues]);
@@ -40,7 +46,7 @@ const useMainPageContent = () => {
   const fetchData = async () => {
     if (API_URL) {
       let formedUrl = API_URL.concat(
-        '?',
+        "?",
         filterValues.name !== "" ? `name=${filterValues.name}&` : "",
         filterValues.isDoneStr !== "" ? `done=${filterValues.isDoneStr}&` : "",
         filterValues.isAscendingStr !== "" ? `asc=${filterValues.isAscendingStr}` : "",
@@ -50,9 +56,16 @@ const useMainPageContent = () => {
         formedUrl = formedUrl.substring(0, formedUrl.length-1);
       }
 
+      console.log("Formed url: ", formedUrl);
+
       setIsLoading(true);
       try {
-        const {data} = await axios.get(formedUrl);
+        const {data} = await axios.get(formedUrl, {
+          // headers: {
+          //   "Content-Type": "application/json",
+          //   "Access-Control-Allow-Origin": "*"
+          // }
+        });
 
         setItems(data.map((it: any) => ({
           id: it.id,
@@ -64,10 +77,27 @@ const useMainPageContent = () => {
 
         setIsErrorDuringFetch(false);
       }
-      catch(e) {
-        // do some stuff here
-        console.log("error during HTTP GET request");
+      catch(e: any) {
         setIsErrorDuringFetch(true);
+
+        if (e.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log("-- error response --");
+          console.log(e.response.data);
+          console.log(e.response.status);
+          console.log(e.response.headers);
+        } else if (e.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser
+          // and an instance of http.ClientRequest in node.js
+          console.log("-- error request --");
+          console.log(e.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('-- other error --');
+          console.log(e.message);
+        }
       }
       finally {
         setIsLoading(false);

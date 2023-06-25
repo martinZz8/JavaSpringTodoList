@@ -12,7 +12,7 @@ import StandardApp from "./routes/standard-app.component";
 function Root() {
   const {appVersion} = useRoot();
   return (
-    <div className={`basicColors ${styles.wrapper}`}>
+    <div className={`${styles.wrapper} basicColors`}>
       <StandardApp appVersion={appVersion}/>
     </div>
   );
