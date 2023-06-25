@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 
 // views
 import ViewMainPage from "../../main-page/main-page.component";
+import ViewItemDetails from "../../item-details/item-details-page.component";
 
 // interfaces
 interface IStandardApp {
@@ -18,9 +19,8 @@ const StandardApp: React.FC<IStandardApp> = ({appVersion}) => {
         exact
         path="/item/:id"
         component={() => (
-          // <ViewTdItem appVersion={appVersion} />
-          <></>
-        )
+            <ViewItemDetails appVersion={appVersion} />
+          )
         }
       />
       {/*Main page*/}

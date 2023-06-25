@@ -66,7 +66,10 @@ const MainPageContent: React.FC = () => {
         }
         {
           isLoading ?
-            <LoadingModal/>
+            <LoadingModal
+              message="Ładowanie..."
+              bgSemiTransparent
+            />
           :
             null
         }

@@ -80,7 +80,10 @@ const TemplateActionModal: React.FC<IActionModal> = ({
           </div>
           {
             isLoading ?
-              <LoadingModal/>
+              <LoadingModal
+                message="Wysyłanie..."
+                bgSemiTransparent
+              />
             :
               null
           }
