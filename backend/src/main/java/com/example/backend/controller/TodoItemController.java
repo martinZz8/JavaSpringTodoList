@@ -1,9 +1,9 @@
 package com.example.backend.controller;
 
-import com.example.backend.DTO.TodoItemDTOI;
-import com.example.backend.DTO.TodoItemDTOO;
-import com.example.backend.DTO.TodoItemIsDoneDTOI;
-import com.example.backend.DTO.pack.TodoItemDTOOPack;
+import com.example.backend.DTOI.TodoItemDTOI;
+import com.example.backend.DTOO.TodoItemDTOO;
+import com.example.backend.DTOI.TodoItemIsDoneDTOI;
+import com.example.backend.DTOO.pack.TodoItemDTOOPack;
 import com.example.backend.service.TodoItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
-package com.example.backend.DTO.pack;
+package com.example.backend.DTOO.pack;
 
-import com.example.backend.DTO.TodoItemDTOO;
+import com.example.backend.DTOO.TodoItemDTOO;
 
 public class TodoItemDTOOPack {
     private TodoItemDTOO todoItem;

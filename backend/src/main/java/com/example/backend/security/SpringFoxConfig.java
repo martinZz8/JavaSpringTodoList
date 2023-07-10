@@ -1,4 +1,4 @@
-package com.example.backend;
+package com.example.backend.security;
 
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.PathSelectors;

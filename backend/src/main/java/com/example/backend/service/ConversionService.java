@@ -1,10 +1,10 @@
 package com.example.backend.service;
 
-import com.example.backend.DTO.ActionCounterDTOO;
-import com.example.backend.DTO.TodoItemDTOI;
+import com.example.backend.DTOO.ActionCounterDTOO;
+import com.example.backend.DTOI.TodoItemDTOI;
 import com.example.backend.model.ActionCounter;
 import com.example.backend.model.TodoItem;
-import com.example.backend.DTO.TodoItemDTOO;
+import com.example.backend.DTOO.TodoItemDTOO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

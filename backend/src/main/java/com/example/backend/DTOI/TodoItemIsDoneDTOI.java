@@ -1,4 +1,4 @@
-package com.example.backend.DTO;
+package com.example.backend.DTOI;
 
 import jakarta.validation.constraints.NotEmpty;
 

@@ -1,8 +1,8 @@
 package com.example.backend.controller;
 
-import com.example.backend.DTO.ActionCounterDTOO;
-import com.example.backend.DTO.TodoItemDTOI;
-import com.example.backend.DTO.TodoItemDTOO;
+import com.example.backend.DTOO.ActionCounterDTOO;
+import com.example.backend.DTOI.TodoItemDTOI;
+import com.example.backend.DTOO.TodoItemDTOO;
 import com.example.backend.enums.ActionCounterName;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;

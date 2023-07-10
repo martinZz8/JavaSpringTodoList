@@ -1,6 +1,6 @@
-package com.example.backend.DTO.pack;
+package com.example.backend.DTOO.pack;
 
-import com.example.backend.DTO.ActionCounterDTOO;
+import com.example.backend.DTOO.ActionCounterDTOO;
 
 public class ActionCounterDTOOPack {
     private ActionCounterDTOO actionCounter;

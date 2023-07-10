@@ -1,7 +1,7 @@
 package com.example.backend.controller;
 
-import com.example.backend.DTO.ActionCounterDTOO;
-import com.example.backend.DTO.pack.ActionCounterDTOOPack;
+import com.example.backend.DTOO.ActionCounterDTOO;
+import com.example.backend.DTOO.pack.ActionCounterDTOOPack;
 import com.example.backend.enums.ActionCounterName;
 import com.example.backend.service.ActionCounterService;
 import org.springframework.beans.factory.annotation.Autowired;

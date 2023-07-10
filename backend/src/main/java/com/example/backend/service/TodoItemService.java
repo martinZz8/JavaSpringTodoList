@@ -1,9 +1,9 @@
 package com.example.backend.service;
 
-import com.example.backend.DTO.TodoItemDTOI;
-import com.example.backend.DTO.TodoItemDTOO;
-import com.example.backend.DTO.TodoItemIsDoneDTOI;
-import com.example.backend.DTO.pack.TodoItemDTOOPack;
+import com.example.backend.DTOI.TodoItemDTOI;
+import com.example.backend.DTOO.TodoItemDTOO;
+import com.example.backend.DTOI.TodoItemIsDoneDTOI;
+import com.example.backend.DTOO.pack.TodoItemDTOOPack;
 import com.example.backend.enums.ActionCounterName;
 import com.example.backend.model.TodoItem;
 import com.example.backend.repository.TodoItemRepository;
