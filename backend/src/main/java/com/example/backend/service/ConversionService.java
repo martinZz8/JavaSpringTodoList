@@ -2,13 +2,19 @@ package com.example.backend.service;
 
 import com.example.backend.DTOO.ActionCounterDTOO;
 import com.example.backend.DTOI.TodoItemDTOI;
+import com.example.backend.DTOO.UserDTOO;
 import com.example.backend.model.ActionCounter;
+import com.example.backend.model.Role;
 import com.example.backend.model.TodoItem;
 import com.example.backend.DTOO.TodoItemDTOO;
+import com.example.backend.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service("entityToDTOConversionService")
 public class ConversionService {
@@ -26,6 +32,9 @@ public class ConversionService {
                     false
         );
         dto.setCreatedOn(entity.getCreatedOn());
+
+        UserDTOO uDTO = userToDTOO(entity.getUser());
+        dto.setUser(uDTO);
 
         return dto;
     }
@@ -65,6 +74,22 @@ public class ConversionService {
         return result;
     }
 
+    // User
+    public UserDTOO userToDTOO(User entity) {
+        UserDTOO dto = new UserDTOO();
+
+        dto.setId(entity.getId());
+        dto.setEmail(entity.getEmail());
+
+        List<String> roles = entity.getRoles().stream()
+                .map(it -> it.getName().name())
+                .collect(Collectors.toList());
+        dto.setRoles(roles);
+
+        return dto;
+    }
+
+
     // -- DTOO to entity --
     // TodoItem
     public TodoItem todoItemDTOOToEntity(TodoItemDTOO dto) {
@@ -74,6 +99,9 @@ public class ConversionService {
         ti.setDescription(dto.getDescription());
         ti.setIsDone(dto.getDone() ? 1 : 0);
         ti.setCreatedOn(dto.getCreatedOn());
+
+        User u = userDTOOToEntity(dto.getUser());
+        ti.setUser(u);
 
         return ti;
     }
@@ -89,6 +117,16 @@ public class ConversionService {
         return ac;
     }
 
+    // User
+    public User userDTOOToEntity(UserDTOO dto) {
+        User u = new User();
+        u.setId(dto.getId());
+        u.setEmail(dto.getEmail());
+        u.setUsername(dto.getUsername());
+
+        return u;
+    }
+
     // -- DTOI to entity --
     // TodoItem
     public TodoItem todoItemDTOIToEntity(TodoItemDTOI dtoi) {
@@ -101,5 +139,4 @@ public class ConversionService {
 
         return ti;
     }
-
 }

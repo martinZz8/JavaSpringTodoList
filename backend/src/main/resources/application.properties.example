@@ -7,3 +7,7 @@ spring.jpa.database-platform=org.hibernate.dialect.MySQL5InnoDBDialect
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.open-in-view=false
 server.port=8081
+
+todo.app.jwtSecret= ======================BezKoder=Spring===========================
+# 24 hours to expire token
+todo.app.jwtExpirationMs=86400000

@@ -21,6 +21,9 @@ public class TodoItem {
     private Date createdOn;
     @Column(name = "isDone", columnDefinition="tinyint(1) default '0'") // 0 - isn't done, 1 - is done
     private Integer isDone;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
     public TodoItem(){}
 
@@ -62,5 +65,13 @@ public class TodoItem {
 
     public void setIsDone(Integer isDone) {
         this.isDone = isDone;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.backend.security;
+package com.example.backend.swagger;
 
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.PathSelectors;

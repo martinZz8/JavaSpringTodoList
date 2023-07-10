@@ -7,6 +7,7 @@ import com.example.backend.service.ActionCounterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class ActionCounterController {
     }
 
     @PostMapping(path = "/increase/{name}", produces = "application/json")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<ActionCounterDTOO> increaseActionCounter(@PathVariable String name) {
         if (ActionCounterName.isProperActionName(name)) {
             Optional<ActionCounterDTOO> o_action_counter = actionCounterService.increaseActionCounter(name);
@@ -50,6 +52,7 @@ public class ActionCounterController {
     }
 
     @PostMapping(path = "/decrease/{name}", produces = "application/json")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<ActionCounterDTOOPack> decreaseActionCounter(@PathVariable String name) {
         if (ActionCounterName.isProperActionName(name)) {
             Optional<ActionCounterDTOOPack> o_action_counter = actionCounterService.decreaseActionCounter(name);

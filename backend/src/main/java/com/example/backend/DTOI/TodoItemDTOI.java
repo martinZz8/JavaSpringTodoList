@@ -40,4 +40,12 @@ public class TodoItemDTOI {
     public void setIsDone(Boolean isDone) {
         this.isDone = isDone;
     }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
+    }
 }

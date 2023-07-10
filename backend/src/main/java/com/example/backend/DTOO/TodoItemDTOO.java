@@ -9,13 +9,17 @@ public class TodoItemDTOO {
     private Date createdOn;
     private Boolean isDone;
 
+    private UserDTOO user;
+
     public TodoItemDTOO(){}
-    public TodoItemDTOO(Long id, String name, String description, Date createdOn, Boolean isDone) {
+
+    public TodoItemDTOO(Long id, String name, String description, Date createdOn, Boolean isDone, UserDTOO user) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.createdOn = createdOn;
         this.isDone = isDone;
+        this.user = user;
     }
 
     public TodoItemDTOO(TodoItemDTOO todoItem) {
@@ -24,6 +28,7 @@ public class TodoItemDTOO {
         this.description = todoItem.getDescription();
         this.createdOn = todoItem.getCreatedOn();
         this.isDone = todoItem.getDone();
+        this.user = new UserDTOO(todoItem.getUser());
     }
 
     public Long getId() {
@@ -64,5 +69,13 @@ public class TodoItemDTOO {
 
     public void setDone(Boolean done) {
         isDone = done;
+    }
+
+    public UserDTOO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTOO user) {
+        this.user = user;
     }
 }

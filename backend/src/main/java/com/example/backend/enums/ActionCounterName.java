@@ -10,9 +10,9 @@ public final class ActionCounterName {
     public static final String UPDATE = "update";
     public static final String DELETE = "delete";
 
-    public static boolean isProperActionName(String name) {
-        List<String> properNames = List.of(READ_ALL, READ_WITH_FILTER, READ_ONE, CREATE, UPDATE, DELETE);
+    private static List<String> properNames = List.of(READ_ALL, READ_WITH_FILTER, READ_ONE, CREATE, UPDATE, DELETE);
 
+    public static boolean isProperActionName(String name) {
         return properNames.contains(name);
     }
 }
