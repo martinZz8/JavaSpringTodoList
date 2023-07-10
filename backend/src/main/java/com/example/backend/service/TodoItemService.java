@@ -44,7 +44,7 @@ public class TodoItemService {
         List<TodoItem> todoItems = todoItemRepository.findAllByUserName(ui.getUsername()); // old: findAll()
 
         List<TodoItemDTOO> ti = conversionService.todoItemListToDTOO(todoItems);
-        
+
         return ti;
     }
 
