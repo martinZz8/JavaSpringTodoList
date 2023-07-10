@@ -24,7 +24,6 @@ public class TodoItemController {
     @GetMapping(path = "/all", produces = "application/json")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public List<TodoItemDTOO> getAllTodoItems() {
-        System.out.println("!!! CALLING IT !!!");
         return todoItemService.getAllTodoItems();
     }
 

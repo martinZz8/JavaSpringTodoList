@@ -43,7 +43,9 @@ public class TodoItemService {
         // Get all todoItems, which userId belongs to logged user
         List<TodoItem> todoItems = todoItemRepository.findAllByUserName(ui.getUsername()); // old: findAll()
 
-        return conversionService.todoItemListToDTOO(todoItems);
+        List<TodoItemDTOO> ti = conversionService.todoItemListToDTOO(todoItems);
+        System.out.println("ti: " + ti);
+        return ti;
     }
 
     public List<TodoItemDTOO> getAllTodoItemsWithFiltering(String name, Boolean isDone, Boolean isAscending) {
@@ -156,6 +158,7 @@ public class TodoItemService {
                 TodoItem entity = conversionService.todoItemDTOIToEntity(dtoi);
                 entity.setId(o_entity.get().getId());
                 entity.setCreatedOn(o_entity.get().getCreatedOn());
+                entity.setUser(o_entity.get().getUser());
 
                 // If new entity (and dtoi) has null "isDone" parameter, set it to previous one
                 if (entity.getIsDone() == null) {

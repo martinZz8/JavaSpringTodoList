@@ -41,7 +41,7 @@ public class User {
     @Size(max = 50)
     private String lastName;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)//fetch = FetchType.LAZY
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

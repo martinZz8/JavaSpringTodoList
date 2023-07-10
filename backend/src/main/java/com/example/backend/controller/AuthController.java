@@ -40,7 +40,7 @@ public class AuthController {
         return ResponseEntity.badRequest().body(dataToRet);
     }
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         try {
