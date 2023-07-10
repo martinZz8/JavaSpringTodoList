@@ -1,3 +1,6 @@
+// Links:
+//- http://localhost:8081/swagger-ui.html
+//- http://localhost:8081/v3/api-docs
 package com.example.backend.swagger;
 
 import org.springframework.context.annotation.Bean;

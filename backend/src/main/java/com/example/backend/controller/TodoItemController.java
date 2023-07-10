@@ -22,13 +22,14 @@ public class TodoItemController {
     private TodoItemService todoItemService;
 
     @GetMapping(path = "/all", produces = "application/json")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public List<TodoItemDTOO> getAllTodoItems() {
+        System.out.println("!!! CALLING IT !!!");
         return todoItemService.getAllTodoItems();
     }
 
     @GetMapping(path = "/all_filtered", produces = "application/json")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public List<TodoItemDTOO> getAllFilteredTodoItems(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "done", required = false) Boolean isDone,
@@ -38,7 +39,7 @@ public class TodoItemController {
     }
 
     @GetMapping(path = "/get/{id}", produces = "application/json")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<TodoItemDTOO> getTodoItemById(@PathVariable String id) {
         try {
             Optional<TodoItemDTOO> o_todo_item = todoItemService.getTodoItemById(Long.parseLong(id));
@@ -58,7 +59,7 @@ public class TodoItemController {
     // Required parameters: "name" (String), "description" (String)
     // Optional parameters: "isDone" (Boolean)
     @PostMapping(path = "/create", produces = "application/json")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<TodoItemDTOO> createTodoItem(@RequestBody TodoItemDTOI dtoi) {
         // If dtoi has null "isDone" parameter, set it to default value - false
         if (dtoi.getIsDone() == null) {
@@ -75,7 +76,7 @@ public class TodoItemController {
     }
 
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<TodoItemDTOOPack> updateTodoItem(@PathVariable String id, @RequestBody TodoItemDTOI dtoi) {
         try {
             Optional<TodoItemDTOOPack> o_todo_item = todoItemService.updateTodoItem(Long.parseLong(id), dtoi);
@@ -95,7 +96,7 @@ public class TodoItemController {
     }
 
     @PutMapping("/update_status/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> updateStatusOfTodoItem(@PathVariable String id, @RequestBody TodoItemIsDoneDTOI dtoi) {
         try {
             if (todoItemService.updateStatusOfTodoItem(Long.parseLong(id), dtoi)) {
@@ -111,7 +112,7 @@ public class TodoItemController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteTodoItem(@PathVariable String id) {
         try
         {
