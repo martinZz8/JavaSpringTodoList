@@ -1,8 +1,11 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import axios from "axios";
 
 // data
 import {initialFilterValues} from "./main-page-content.data";
+
+// contexts
+import {LoginContext} from "../../../providers/login/login-provider.component";
 
 // interfaces
 import {IFilterValues, IItem} from "./main-page-content.types";
@@ -12,21 +15,25 @@ const API_URL = process.env.REACT_APP_BACKEND_API_URL !== undefined ?
   :
     null;
 
-const useMainPageContent = () => {
+const useMainPageContent = (isLoggedIn: boolean | null) => {
   const [items, setItems] = useState<IItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isErrorDuringFetch, setIsErrorDuringFetch] = useState<boolean>(false);
   const [filterValues, setFilterValues] = useState<IFilterValues>(initialFilterValues);
+
+  const {bearerToken} = useContext(LoginContext);
 
   // To delete
   // useEffect(() => {
   //   console.log("items: ", items);
   // },[items]);
 
-  // -- Every time filterValues changes, refetch data from DB --
+  // -- Every time isLoggedIn or filterValues changes, refetch data from DB --
   useEffect(() => {
-    void fetchData();
-  },[filterValues]);
+    if (isLoggedIn) {
+      void fetchData();
+    }
+  },[isLoggedIn, filterValues]);
 
   const handleOnFilterChange = (name: string, value: string) => {
     setFilterValues(prev => ({
@@ -52,7 +59,11 @@ const useMainPageContent = () => {
 
       setIsLoading(true);
       try {
-        const {data} = await axios.get(formedUrl);
+        const {data} = await axios.get(formedUrl, {
+          headers: {
+            Authorization: "Bearer "+bearerToken
+          }
+        });
 
         setItems(data.map((it: any) => ({
           id: it.id,

@@ -99,7 +99,7 @@ public class AuthService {
         user.setRoles(new HashSet<>(Arrays.asList(o_userRole.get())));
         userRepository.save(user);
 
-        return new RegisterUserDTOO(true, "User registered successfully!");
+        return new RegisterUserDTOO(false, "User registered successfully!");
     }
 
     public Optional<UserDTOO> getUserById(Long id) {

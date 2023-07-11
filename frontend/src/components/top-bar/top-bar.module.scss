@@ -1,0 +1,50 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+
+  .infoBar {
+    display: flex;
+    flex-direction: column;
+
+    p {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-white);
+      margin-bottom: 10px;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      &.logoutButton {
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .columnLink {
+    display: flex;
+    flex-direction: column;
+
+    a {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-white);
+      margin-bottom: 10px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

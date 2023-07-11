@@ -14,7 +14,11 @@ interface IViewMainPage {
 const ViewMainPage: React.FC<IViewMainPage> = ({appVersion}) => {
 
    return (
-      <TemplateView appVersion={appVersion} viewTitle="">
+      <TemplateView
+        appVersion={appVersion}
+        viewTitle=""
+        hasTopBar
+      >
          <MainPageContent/>
       </TemplateView>
    );

@@ -1,5 +1,8 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import axios from "axios";
+
+// contexts
+import {LoginContext} from "../../../../providers/login/login-provider.component";
 
 // interfaces
 import {IEditData} from "./todo-item.types";
@@ -26,6 +29,8 @@ const useTodoItem = (
   const [isEditOpened, setIsEditOpened] = useState<boolean>(false);
   const [isErrorDuplicatedName, setIsErrorDuplicatedName] = useState<boolean>(false);
   const [isDeleteItemModalOpened, setIsDeleteItemModalOpened] = useState<boolean>(false);
+
+  const {bearerToken} = useContext(LoginContext);
 
   useEffect(() => {
     setEditValues({
@@ -55,7 +60,8 @@ const useTodoItem = (
           isDone: newStatus
         }, {
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: "Bearer "+bearerToken
           }
         });
 
@@ -81,7 +87,8 @@ const useTodoItem = (
           description: editValues.description
         }, {
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: "Bearer "+bearerToken
           }
         });
 

@@ -1,8 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 
 // data
 import {initialAddItemForm} from "./add-item-modal.types";
+
+// contexts
+import {LoginContext} from "../../../../providers/login/login-provider.component";
 
 // interfaces
 import {IAddItemForm} from "./add-item-modal.data";
@@ -21,6 +24,8 @@ const useAddItemModal = (
   const [addItemForm, setAddItemForm] = useState<IAddItemForm>(initialAddItemForm);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDuplicatedNameError, setIsDuplicatedNameError] = useState<boolean>(false);
+
+  const {bearerToken} = useContext(LoginContext);
 
   useEffect(() => {
     setAddItemForm(initialAddItemForm);
@@ -47,7 +52,8 @@ const useAddItemModal = (
           isDone: addItemForm.isDone
         }, {
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: "Bearer "+bearerToken
           }
         });
 

@@ -6,15 +6,15 @@ import ViewMainPage from "../../main-page/main-page.component";
 import ViewItemDetails from "../../item-details/item-details-page.component";
 
 // interfaces
-interface IStandardApp {
+interface IAuthenticatedApp {
   appVersion: string;
 }
 
-const StandardApp: React.FC<IStandardApp> = ({appVersion}) => {
+const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
 
   return (
     <Switch>
-      {/*TODO Td item page*/}
+      {/*Item page*/}
       <Route
         exact
         path="/item/:id"
@@ -27,9 +27,8 @@ const StandardApp: React.FC<IStandardApp> = ({appVersion}) => {
       <Route
         exact
         path="/"
-        component={() => (
-            <ViewMainPage appVersion={appVersion} />
-          )
+        component={() =>
+          <ViewMainPage appVersion={appVersion} />
         }
       />
       {/*Other routes*/}
@@ -44,4 +43,4 @@ const StandardApp: React.FC<IStandardApp> = ({appVersion}) => {
   );
 };
 
-export default StandardApp;
+export default AuthenticatedApp;

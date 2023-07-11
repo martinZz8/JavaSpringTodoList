@@ -17,7 +17,11 @@ const ViewItemDetails: React.FC<IViewMainPage> = ({appVersion, match}) => {
   //const {id} = useParams<{id: string}>();
 
   return (
-    <TemplateView appVersion={appVersion} viewTitle={`Todo with id ${match.params.id}`}>
+    <TemplateView
+      appVersion={appVersion}
+      viewTitle={`Todo with id ${match.params.id}`}
+      hasTopBar
+    >
       <ItemDetailsContent/>
     </TemplateView>
   );

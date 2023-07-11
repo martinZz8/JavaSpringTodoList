@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 // styles
 import styles from "./Root.module.scss";
@@ -6,14 +6,28 @@ import styles from "./Root.module.scss";
 // hooks
 import useRoot from "./useRoot";
 
+// contexts
+import {LoginContext} from "../../providers/login/login-provider.component";
+
 // components
-import StandardApp from "./routes/standard-app.component";
+import AuthenticatedApp from "./routes/authenticated-app.component";
+import UnauthenticatedApp from "./routes/unauthenticated-app.component";
 
 function Root() {
   const {appVersion} = useRoot();
+  const {isLoggedIn} = useContext(LoginContext);
+
   return (
     <div className={`${styles.wrapper} basicColors`}>
-      <StandardApp appVersion={appVersion}/>
+      {
+        isLoggedIn !== null ?
+          isLoggedIn ?
+            <AuthenticatedApp appVersion={appVersion}/>
+          :
+            <UnauthenticatedApp appVersion={appVersion}/>
+        :
+          null
+      }
     </div>
   );
 }

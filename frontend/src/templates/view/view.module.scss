@@ -3,10 +3,10 @@
    min-height: 100vh;
    display: flex;
    flex-direction: column;
+   background-color: var(--color-darker-gray);
 
    .appContent {
       width: 100%;
       flex-grow: 1;
-      background-color: var(--color-darker-gray);
    }
 }

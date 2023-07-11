@@ -1,5 +1,8 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
+
+// contexts
+import {LoginContext} from "../../../providers/login/login-provider.component";
 
 // interfaces
 import {IItem} from "../../main-page/content/main-page-content.types";
@@ -14,6 +17,8 @@ const useItemDetailsContent = (idStr: number) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isItemNotFound, setIsItemNotFound] = useState<boolean>(false);
 
+  const {bearerToken} = useContext(LoginContext);
+
   useEffect(() => {
     void getItemById();
   },[]);
@@ -22,7 +27,11 @@ const useItemDetailsContent = (idStr: number) => {
     if (GET_ITEM_API_URL) {
       setIsLoading(true);
       try {
-        const {data} = await axios.get(GET_ITEM_API_URL);
+        const {data} = await axios.get(GET_ITEM_API_URL, {
+          headers: {
+            Authorization: "Bearer "+bearerToken
+          }
+        });
         setItem({
           id: data.id,
           name: data.name,
@@ -32,7 +41,19 @@ const useItemDetailsContent = (idStr: number) => {
         });
       }
       catch(e: any) {
-        console.log("Item with specified id was not found");
+        if (e.response) {
+          if (e.response.status === 404) {
+            console.log("Item with specified id was not found");
+          }
+          else {
+            // 403 (forbidden) status code
+            console.log("Item was found, but you don't have authority to watch it");
+          }
+        }
+        else {
+          console.log("Unexpected error occurred. Try again later.");
+        }
+
         setIsItemNotFound(true);
       }
       finally {

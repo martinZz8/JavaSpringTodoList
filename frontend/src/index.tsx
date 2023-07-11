@@ -8,8 +8,9 @@ import './styles/root.scss';
 import './styles/theme-colors.scss';
 import "./assets/fontello/css/fontello.css";
 
-// helmet provider
+// providers
 import {HelmetProvider} from "react-helmet-async";
+import LoginProvider from "./providers/login/login-provider.component";
 
 // router
 import {BrowserRouter as Router} from "react-router-dom";
@@ -20,9 +21,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <HelmetProvider>
-      <Router>
-        <Root />
-      </Router>
+      <LoginProvider>
+        <Router>
+          <Root />
+        </Router>
+      </LoginProvider>
     </HelmetProvider>
   </React.StrictMode>
 );

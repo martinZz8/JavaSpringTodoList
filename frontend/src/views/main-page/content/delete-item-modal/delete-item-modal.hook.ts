@@ -1,5 +1,8 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import axios from "axios";
+
+// contexts
+import {LoginContext} from "../../../../providers/login/login-provider.component";
 
 const useDeleteItemModal = (
     itemIdx: number,
@@ -13,6 +16,8 @@ const useDeleteItemModal = (
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const {bearerToken} = useContext(LoginContext);
+
   const performDeletionOfItem = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -21,7 +26,11 @@ const useDeleteItemModal = (
       setIsLoading(true);
 
       try {
-        await axios.delete(API_URL);
+        await axios.delete(API_URL, {
+          headers: {
+            Authorization: "Bearer "+bearerToken
+          }
+        });
 
         // Close modal & locally delete item
         closeModal();
