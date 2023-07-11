@@ -7,6 +7,7 @@ import com.example.backend.DTOI.TodoItemIsDoneDTOI;
 import com.example.backend.DTOO.UpdateStatusTodoItemDTOO;
 import com.example.backend.DTOO.pack.TodoItemDTOOPack;
 import com.example.backend.enums.ActionCounterName;
+import com.example.backend.enums.ERole;
 import com.example.backend.model.TodoItem;
 import com.example.backend.model.User;
 import com.example.backend.repository.TodoItemRepository;
@@ -105,6 +106,10 @@ public class TodoItemService {
 
         if (o_entity.isPresent()) {
             // Check if todoItem belongs to logged user
+            // ** Add it to "if" statement, when you want to let admin have access to others items (or write new endpoint for this purpose): **
+            // "|| doesLoggedUserHasAuthority(ERole.ROLE_ADMIN)"
+            // or when you want to let multiple roles to have extra access:
+            // "|| doesLoggedUserHasAuthorities(Arrays.asList(ERole.ROLE_MODERATOR, ERole.ROLE_ADMIN))"
             if (doesEntityBelongsToLoggedUser(o_entity.get())) {
                 TodoItemDTOO dto = conversionService.todoItemToDTOO(o_entity.get());
 
@@ -214,6 +219,7 @@ public class TodoItemService {
         return Optional.empty();
     }
 
+    // -- ADDITIONAL METHODS --
     private UserDetails getLoggedUserDetails() {
         return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
@@ -222,5 +228,37 @@ public class TodoItemService {
         UserDetails userDetails = getLoggedUserDetails();
 
         return entity.getUser().getUsername().equals(userDetails.getUsername());
+    }
+
+    // Can be used when defining special behaviour, when specific user role is present
+    private boolean doesLoggedUserHasAuthority(ERole authority) {
+        String authorityName = authority.name();
+        UserDetails userDetails = getLoggedUserDetails();
+        List<String> userAuthorities = userDetails.getAuthorities()
+                .stream()
+                .map(it -> it.getAuthority())
+                .collect(Collectors.toList());
+
+        return userAuthorities.contains(authorityName);
+    }
+
+    // Additional method - to check if at least one role is present
+    private boolean doesLoggedUserHasAuthorities(List<ERole> authorities) {
+        List<String> authoritiesNames = authorities.stream().map(it -> it.name()).collect(Collectors.toList());
+        UserDetails userDetails = getLoggedUserDetails();
+        List<String> userAuthorities = userDetails.getAuthorities()
+                .stream()
+                .map(it -> it.getAuthority())
+                .collect(Collectors.toList());
+
+        boolean doesContainOne = false;
+        for (String authorityName: authoritiesNames) {
+            if (userAuthorities.contains(authorityName)) {
+                doesContainOne = true;
+                break;
+            }
+        }
+
+        return doesContainOne;
     }
 }
