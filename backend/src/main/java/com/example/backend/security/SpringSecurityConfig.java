@@ -70,15 +70,6 @@ public class SpringSecurityConfig {
                         .anyRequest().authenticated()
                 );
 
-        // -- Below doesn't work, instead use "corsConfigurer()" method --
-        //http.cors().disable();
-
-        // -- With below authentication doesn't work (but should). Without that works good. --
-        //http.authorizeHttpRequests().anyRequest().authenticated();
-
-        // -- Optional --
-        //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 

@@ -1,8 +1,10 @@
 package com.example.backend.controller;
 
 import com.example.backend.DTOI.TodoItemDTOI;
+import com.example.backend.DTOO.DeleteTodoItemDTOO;
 import com.example.backend.DTOO.TodoItemDTOO;
 import com.example.backend.DTOI.TodoItemIsDoneDTOI;
+import com.example.backend.DTOO.UpdateStatusTodoItemDTOO;
 import com.example.backend.DTOO.pack.TodoItemDTOOPack;
 import com.example.backend.service.TodoItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +43,22 @@ public class TodoItemController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<TodoItemDTOO> getTodoItemById(@PathVariable String id) {
         try {
-            Optional<TodoItemDTOO> o_todo_item = todoItemService.getTodoItemById(Long.parseLong(id));
+            Optional<TodoItemDTOOPack> o_todo_item = todoItemService.getTodoItemById(Long.parseLong(id));
 
             if (o_todo_item.isPresent()) {
-                return ResponseEntity.status(HttpStatus.OK).body(o_todo_item.get());
+                if (o_todo_item.get().getTodoItem() != null) {
+                    return ResponseEntity.status(HttpStatus.OK).body(o_todo_item.get().getTodoItem());
+                }
+
+                if (o_todo_item.get().getAuthorized()) {
+                    // There is no case to enter here
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+                }
+
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
             }
-            else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            }
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         catch(NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
@@ -79,15 +89,20 @@ public class TodoItemController {
     public ResponseEntity<TodoItemDTOOPack> updateTodoItem(@PathVariable String id, @RequestBody TodoItemDTOI dtoi) {
         try {
             Optional<TodoItemDTOOPack> o_todo_item = todoItemService.updateTodoItem(Long.parseLong(id), dtoi);
+
             if (o_todo_item.isPresent()) {
                 if (o_todo_item.get().getTodoItem() != null) {
                     return ResponseEntity.status(HttpStatus.OK).body(o_todo_item.get());
                 }
 
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(o_todo_item.get());
+                if (o_todo_item.get().getAuthorized()) {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(o_todo_item.get());
+                }
+
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(o_todo_item.get());
             }
 
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         catch(NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
@@ -98,12 +113,17 @@ public class TodoItemController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> updateStatusOfTodoItem(@PathVariable String id, @RequestBody TodoItemIsDoneDTOI dtoi) {
         try {
-            if (todoItemService.updateStatusOfTodoItem(Long.parseLong(id), dtoi)) {
-                return ResponseEntity.status(HttpStatus.OK).body(null);
+            Optional<UpdateStatusTodoItemDTOO> o_item = todoItemService.updateStatusOfTodoItem(Long.parseLong(id), dtoi);
+
+            if (o_item.isPresent()) {
+                if (o_item.get().getAuthorized()) {
+                    return ResponseEntity.status(HttpStatus.OK).body(null);
+                }
+
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
             }
-            else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
-            }
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         catch(NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
@@ -115,10 +135,17 @@ public class TodoItemController {
     public ResponseEntity<Void> deleteTodoItem(@PathVariable String id) {
         try
         {
-            if(todoItemService.deleteTodoItem(Long.parseLong(id)))
-                return ResponseEntity.status(HttpStatus.OK).body(null);
-            else
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+            Optional<DeleteTodoItemDTOO> o_item = todoItemService.deleteTodoItem(Long.parseLong(id));
+
+            if(o_item.isPresent()) {
+                if (o_item.get().getAuthorized()) {
+                    return ResponseEntity.status(HttpStatus.OK).body(null);
+                }
+
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         catch(NumberFormatException e)
         {

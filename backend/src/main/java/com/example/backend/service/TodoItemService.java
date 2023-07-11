@@ -1,8 +1,10 @@
 package com.example.backend.service;
 
 import com.example.backend.DTOI.TodoItemDTOI;
+import com.example.backend.DTOO.DeleteTodoItemDTOO;
 import com.example.backend.DTOO.TodoItemDTOO;
 import com.example.backend.DTOI.TodoItemIsDoneDTOI;
+import com.example.backend.DTOO.UpdateStatusTodoItemDTOO;
 import com.example.backend.DTOO.pack.TodoItemDTOOPack;
 import com.example.backend.enums.ActionCounterName;
 import com.example.backend.model.TodoItem;
@@ -94,22 +96,21 @@ public class TodoItemService {
         return conversionService.todoItemListToDTOO(todoItemsToRet);
     }
 
-    public Optional<TodoItemDTOO> getTodoItemById(Long id) {
+    public Optional<TodoItemDTOOPack> getTodoItemById(Long id) {
         // Increase ActionCounter
         actionCounterService.increaseActionCounter(ActionCounterName.READ_ONE);
 
         // Find todoItem by id
         Optional<TodoItem> o_entity = todoItemRepository.findById(id);
-        TodoItemDTOO dto;
 
         if (o_entity.isPresent()) {
             // Check if todoItem belongs to logged user
             if (doesEntityBelongsToLoggedUser(o_entity.get())) {
-                dto = conversionService.todoItemToDTOO(o_entity.get());
+                TodoItemDTOO dto = conversionService.todoItemToDTOO(o_entity.get());
 
-                return Optional.of(dto);
+                return Optional.of(new TodoItemDTOOPack(dto, "Successful request"));
             }
-            return Optional.empty();
+            return Optional.of(new TodoItemDTOOPack(null, "Requested item doesn't belong to logged user", false));
         }
         return Optional.empty();
     }
@@ -168,12 +169,12 @@ public class TodoItemService {
 
                 return Optional.of(new TodoItemDTOOPack(conversionService.todoItemToDTOO(entity), ""));
             }
-            return Optional.empty();
+            return Optional.of(new TodoItemDTOOPack(null, "Requested item doesn't belong to logged user", false));
         }
         return Optional.empty();
     }
 
-    public boolean updateStatusOfTodoItem(Long id, TodoItemIsDoneDTOI dtoi) {
+    public Optional<UpdateStatusTodoItemDTOO> updateStatusOfTodoItem(Long id, TodoItemIsDoneDTOI dtoi) {
         // Increase ActionCounter
         actionCounterService.increaseActionCounter(ActionCounterName.UPDATE);
 
@@ -187,14 +188,14 @@ public class TodoItemService {
                 entity.setIsDone(dtoi.getIsDone() ? 1 : 0);
                 todoItemRepository.save(entity);
 
-                return true;
+                return Optional.of(new UpdateStatusTodoItemDTOO(true, true));
             }
-            return false;
+            return Optional.of(new UpdateStatusTodoItemDTOO(true, false));
         }
-        return false;
+        return Optional.empty();
     }
 
-    public boolean deleteTodoItem(Long id) {
+    public Optional<DeleteTodoItemDTOO> deleteTodoItem(Long id) {
         // Increase ActionCounter
         actionCounterService.increaseActionCounter(ActionCounterName.DELETE);
 
@@ -205,12 +206,12 @@ public class TodoItemService {
                 TodoItem entity = o_entity.get();
                 todoItemRepository.delete(entity);
 
-                return true;
+                return Optional.of(new DeleteTodoItemDTOO(true, true));
             }
-            return false;
+            return Optional.of(new DeleteTodoItemDTOO(true, false));
         }
 
-        return false;
+        return Optional.empty();
     }
 
     private UserDetails getLoggedUserDetails() {
