@@ -19,7 +19,7 @@ public class User {
 
     @Column(name = "username", unique = true)
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 50)
     private String username;
 
     @Column(name = "email", unique = true)
@@ -41,7 +41,7 @@ public class User {
     @Size(max = 50)
     private String lastName;
 
-    @ManyToMany(fetch = FetchType.EAGER)//fetch = FetchType.LAZY
+    @ManyToMany(fetch = FetchType.EAGER)//old (doesn't work well): "fetch = FetchType.LAZY"
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

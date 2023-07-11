@@ -4,6 +4,7 @@ import com.example.backend.DTOI.LoginUserDTOI;
 import com.example.backend.DTOI.RegisterUserDTOI;
 import com.example.backend.DTOO.LoginUserDTOO;
 import com.example.backend.DTOO.RegisterUserDTOO;
+import com.example.backend.DTOO.UserDTOO;
 import com.example.backend.enums.ERole;
 import com.example.backend.model.Role;
 import com.example.backend.model.User;
@@ -12,6 +13,7 @@ import com.example.backend.repository.UserRepository;
 import com.example.backend.security.jwt.JwtUtils;
 import com.example.backend.service.userDetails.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -41,6 +44,10 @@ public class AuthService {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    @Qualifier("entityToDTOConversionService")
+    private ConversionService conversionService;
 
     public LoginUserDTOO loginUser(LoginUserDTOI dtoi) {
         Authentication authentication = authenticationManager.authenticate(
@@ -93,6 +100,18 @@ public class AuthService {
         userRepository.save(user);
 
         return new RegisterUserDTOO(true, "User registered successfully!");
+    }
+
+    public Optional<UserDTOO> getUserById(Long id) {
+        Optional<User> o_user = userRepository.findById(id);
+
+        if (o_user.isPresent()) {
+            UserDTOO dto = conversionService.userToDTOO(o_user.get());
+
+            return Optional.of(dto);
+        }
+
+        return Optional.empty();
     }
 
     public boolean deleteUser(Long id) {
