@@ -67,6 +67,7 @@ public class SpringSecurityConfig {
                     auth.requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/todo_item/**").permitAll()
                         .requestMatchers("/api/action_counter/**").permitAll()
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll() //not required: "/configuration/**", "/swagger-resources/**", "/webjars/**"
                         .anyRequest().authenticated()
                 );
 
